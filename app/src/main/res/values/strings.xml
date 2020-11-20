@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SYM_Labo03</string>
+    <string name="main_barcode_btn">Code-barres</string>
+    <string name="main_ibeacon_btn">iBeacon</string>
+    <string name="main_nfc_btn">NFC</string>
+    <string name="main_title">Labo 3 - Utilisation de données environnemental</string>
 </resources>
