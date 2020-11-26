@@ -4,4 +4,5 @@
     <string name="main_ibeacon_btn">iBeacon</string>
     <string name="main_nfc_btn">NFC</string>
     <string name="main_title">Labo 3 - Utilisation de données environnemental</string>
+    <string name="nfc_not_supported">NFC not supported on your device</string>
 </resources>
