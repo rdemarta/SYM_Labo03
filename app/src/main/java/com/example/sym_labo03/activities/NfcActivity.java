@@ -1,3 +1,5 @@
+// Authors: Robin Demarta, Loïc Dessaules, Chau Ying Kot
+
 package com.example.sym_labo03.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,29 +14,61 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sym_labo03.R;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NfcActivity extends AppCompatActivity {
 
     private NfcAdapter mNfcAdapter;
 
+    private ArrayList<String> readNfcValues = new ArrayList<>();
+    private boolean nfcOk = false;
+
     private static final String TAG = "NFC_ACTIVITY";
+    private static final String USERNAME = "admin";
+    private static final String PASSWORD = "secret";
+    private static final String[] NFC_PWD = new String[]{"test", "é è ê ë ē", "♤ ♡ ♢ ♧"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
+        // Inputs
+        Button btnConnect = findViewById(R.id.nfc_connect_btn);
+        EditText etUsername = findViewById(R.id.nfc_username_input);
+        EditText etPassword = findViewById(R.id.nfc_password_input);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter == null) {
             Toast.makeText(this, R.string.nfc_not_supported, Toast.LENGTH_LONG).show();
         }
+
+        // Connect button: verify all inputs
+        btnConnect.setOnClickListener(v -> {
+            // Verify username and password
+            if(etUsername.getText().toString().equals(USERNAME) && etPassword.getText().toString().equals(PASSWORD)) {
+                // Verify NFC
+                if(nfcOk) {
+                    // Go to next activity
+                    Intent intent = new Intent(NfcActivity.this, NfcConnectedActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, R.string.nfc_read_wrong, Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(this, R.string.nfc_bad_credentials, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -60,12 +94,26 @@ public class NfcActivity extends AppCompatActivity {
         for (NdefRecord ndefRecord : ndefMessage.getRecords()) {
             if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
                 try {
-                    Log.e(TAG, readText(ndefRecord));
+                    // Read and store string
+                    String readValue = readText(ndefRecord);
+                    readNfcValues.add(readValue);
+
+                    // Check value correctness
+                    for (String s : NFC_PWD) {
+                        if (readValue.equals(s)) {
+                            nfcOk = true;
+                            break;
+                        }
+                    }
+
+                    Log.e(TAG, readValue);
                 } catch (UnsupportedEncodingException e) {
-                    Log.e(TAG, "Unsupported Encoding", e);
+                    e.printStackTrace();
                 }
             }
         }
+
+        Toast.makeText(this, nfcOk ? R.string.nfc_read_ok : R.string.nfc_read_wrong, Toast.LENGTH_SHORT).show();
     }
 
     // Source: https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
