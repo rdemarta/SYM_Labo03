@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-/*        ibeaconBtn.setOnClickListener(new View.OnClickListener() {
+        ibeaconBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.class, )
+                Intent intent = new Intent(MainActivity.this, IBeaconActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
 /*        nfcBtn.setOnClickListener(new View.OnClickListener() {
             @Override
