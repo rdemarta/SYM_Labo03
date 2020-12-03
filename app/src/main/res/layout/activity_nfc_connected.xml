@@ -6,4 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".activities.NfcConnectedActivity">
 
+    <LinearLayout
+        android:id="@+id/nfcConnected_buttonsLayout"
+        android:layout_width="266dp"
+        android:layout_height="153dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+        <Button
+            android:id="@+id/nfcConnected_max_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nfc_max_btn" />
+
+        <Button
+            android:id="@+id/nfcConnected_med_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nfc_med_btn" />
+
+        <Button
+            android:id="@+id/nfcConnected_min_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nfc_min_btn" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
