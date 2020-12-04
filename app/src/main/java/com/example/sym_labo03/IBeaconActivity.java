@@ -51,6 +51,18 @@ public class IBeaconActivity extends AppCompatActivity implements BeaconConsumer
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        beaconManager.unbind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        beaconManager.bind(this);
+    }
+
+    @Override
     public void onBeaconServiceConnect() {
         beaconManager.removeAllRangeNotifiers();
         beaconManager.addRangeNotifier(new RangeNotifier() {
@@ -58,7 +70,7 @@ public class IBeaconActivity extends AppCompatActivity implements BeaconConsumer
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                 adapter.clearBeacons();
                 for(Beacon b : beacons){
-                    BeaconModel beaconModel = new BeaconModel(b.getId1().toString(), "1", "3", b.getRssi());
+                    BeaconModel beaconModel = new BeaconModel(b.getId1().toString(), b.getId3().toString(), b.getId2().toString(), b.getRssi());
                     adapter.addBeacon(beaconModel);
                 }
                 if (beacons.size() > 0) {

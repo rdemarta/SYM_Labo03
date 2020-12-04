@@ -7,10 +7,10 @@ public class BeaconModel {
     private String major;
     private int rssi;
 
-    public BeaconModel(String uuid, String minor, String major, int rssi) {
+    public BeaconModel(String uuid, String major, String minor, int rssi) {
         this.uuid = uuid;
-        this.minor = minor;
         this.major = major;
+        this.minor = minor;
         this.rssi = rssi;
     }
 
