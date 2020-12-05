@@ -15,21 +15,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/barcode_preview"/>
+        app:layout_constraintBottom_toTopOf="@id/barcode_preview_iv"/>
 
 
     <ImageView
-        android:id="@+id/barcode_preview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
-
-    <TextView
-        android:id="@+id/barcode_decodedtext_tv"
+        android:id="@+id/barcode_preview_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:hint="Decoded message"
+        android:contentDescription="@string/barcode_preview_description_iv" />
+
+    <TextView
+        android:id="@+id/barcode_decoded_text_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/barcode_decoded_hint"
         />
 
 </LinearLayout>

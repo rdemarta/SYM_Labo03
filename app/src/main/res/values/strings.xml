@@ -4,4 +4,6 @@
     <string name="main_ibeacon_btn">iBeacon</string>
     <string name="main_nfc_btn">NFC</string>
     <string name="main_title">Labo 3 - Utilisation de données environnemental</string>
+    <string name="barcode_preview_description_iv">preview</string>
+    <string name="barcode_decoded_hint">Decoded message</string>
 </resources>

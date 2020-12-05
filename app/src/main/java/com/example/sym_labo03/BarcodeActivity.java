@@ -12,7 +12,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
-import com.journeyapps.barcodescanner.BarcodeView;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
@@ -25,8 +24,11 @@ public class BarcodeActivity extends AppCompatActivity {
 
     private DecoratedBarcodeView barcodeView;
 
+    private final ImageView preview = findViewById(R.id.barcode_preview_iv);
 
-    private BarcodeCallback callback = new BarcodeCallback() {
+    private final TextView decodedText = findViewById(R.id.barcode_decoded_text_tv);
+
+    private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
             if (result.getText() == null || result.getText().equals(lastText)) {
@@ -36,12 +38,10 @@ public class BarcodeActivity extends AppCompatActivity {
 
             lastText = result.getText();
 
-            // Set the image
-            ImageView preview = findViewById(R.id.barcode_preview);
+            // Set the thumbnail
             preview.setImageBitmap(result.getBitmapWithResultPoints(Color.YELLOW));
 
-            // Set the text
-            TextView decodedText = findViewById(R.id.barcode_decodedtext_tv);
+            // Set the decrypted text
             decodedText.setText(result.getText());
         }
 
@@ -57,13 +57,17 @@ public class BarcodeActivity extends AppCompatActivity {
 
         barcodeView = findViewById(R.id.barcode_scanner);
 
+        // Set the list of format that our scanner can handle
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
 
+        // Set the formats
         barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
+
+        // Init the barcode
         barcodeView.initializeFromIntent(getIntent());
+
+        // Scan continuously
         barcodeView.decodeContinuous(callback);
-
-
     }
 
     @Override
@@ -80,6 +84,8 @@ public class BarcodeActivity extends AppCompatActivity {
         barcodeView.pause();
     }
 
+
+    // the application need this override to work correctly
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return barcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
