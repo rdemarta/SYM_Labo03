@@ -16,4 +16,6 @@
     <string name="nfc_max_btn">Maximum security</string>
     <string name="nfc_med_btn">Medium security</string>
     <string name="nfc_min_btn">Minimum security</string>
+    <string name="nfc_sufficient_level">Sufficient level</string>
+    <string name="nfc_insufficient_level">Insufficient level</string>
 </resources>
