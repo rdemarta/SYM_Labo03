@@ -53,59 +53,58 @@ public class NfcReader {
     // Source: https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
     public void handleIntentReadNfc() {
         String action = intent.getAction();
+        Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+        // Prepare reading thread
+        Thread readNfc = new Thread(() -> {
+            Ndef ndef = Ndef.get(tag);
+
+            if (ndef != null) {
+                NdefMessage ndefMessage = ndef.getCachedNdefMessage();
+                NdefRecord[] records = ndefMessage.getRecords();
+                ArrayList<String> results = new ArrayList<>();
+
+                for (NdefRecord ndefRecord : records) { // Read every line
+                    if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
+                        try {
+                            String result = readText(ndefRecord);
+                            results.add(result);
+                            Log.d(TAG, result);
+                        } catch (UnsupportedEncodingException e) {
+                            Log.e(TAG, "Unsupported Encoding", e);
+                        }
+                    }
+                }
+
+                Message msg = handler.obtainMessage();
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("results", results);
+                msg.setData(bundle);
+                handler.sendMessage(msg);
+            }
+        });
+
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
 
             String type = intent.getType();
             if (MIME_TEXT_PLAIN.equals(type)) {
-
-                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-                Thread readNfc = new Thread(() -> {
-                    Ndef ndef = Ndef.get(tag);
-
-                    if (ndef != null) {
-                        NdefMessage ndefMessage = ndef.getCachedNdefMessage();
-                        NdefRecord[] records = ndefMessage.getRecords();
-                        ArrayList<String> results = new ArrayList<>();
-
-                        for (NdefRecord ndefRecord : records) { // Read every line
-                            if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
-                                try {
-                                    String result = readText(ndefRecord);
-                                    results.add(result);
-                                    Log.d(TAG, result);
-                                } catch (UnsupportedEncodingException e) {
-                                    Log.e(TAG, "Unsupported Encoding", e);
-                                }
-                            }
-                        }
-
-                        Message msg = handler.obtainMessage();
-                        Bundle bundle = new Bundle();
-                        bundle.putStringArrayList("results", results);
-                        msg.setData(bundle);
-                        handler.sendMessage(msg);
-                    }
-                });
                 readNfc.start();
-
             } else {
                 Log.d(TAG, "Wrong mime type: " + type);
             }
-        } /*else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+        } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
 
             // In case we would still use the Tech Discovered Intent
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             String[] techList = tag.getTechList();
             String searchedTech = Ndef.class.getName();
 
             for (String tech : techList) {
                 if (searchedTech.equals(tech)) {
-                    //new NdefReaderTask().execute(tag); TODO ?
+                    readNfc.start();
                     break;
                 }
             }
-        }*/
+        }
     }
 
     // Source: https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
