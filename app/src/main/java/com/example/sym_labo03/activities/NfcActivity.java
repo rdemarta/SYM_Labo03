@@ -35,7 +35,6 @@ public class NfcActivity extends AppCompatActivity {
     private static final String TAG = "NFC_ACTIVITY";
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "secret";
-    private static final String[] NFC_PWD = new String[]{"test", "é è ê ë ē", "♤ ♡ ♢ ♧"};
 
     private static class NfcHandler extends Handler {
         private final WeakReference<NfcActivity> mActivity;
@@ -94,13 +93,13 @@ public class NfcActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setupForegroundDispatch();
+        NfcReader.setupForegroundDispatch(this, mNfcAdapter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        stopForegroundDispatch();
+        NfcReader.stopForegroundDispatch(this, mNfcAdapter);
     }
 
     @Override
@@ -110,19 +109,11 @@ public class NfcActivity extends AppCompatActivity {
     }
 
     /**
-     * Verify if the given list of messages contains a correct pass.
-     * @param values list of String value to ve verified.
+     * Verify if the given list of messages contains a correct pass and update UI.
+     * @param values list of String value to be verified.
      */
     private void verifyNfcValues(ArrayList<String> values) {
-        nfcOk = false;
-
-        // Search for correct value
-        for(String v : NFC_PWD) {
-            if(values.contains(v)) {
-                nfcOk = true;
-                break;
-            }
-        }
+        nfcOk = NfcReader.verifyValues(values);
 
         // Grant access if value found
         if(nfcOk) {
@@ -132,35 +123,6 @@ public class NfcActivity extends AppCompatActivity {
             nfcLabel.setText(R.string.nfc_read_wrong);
             nfcLabel.setTextColor(Color.RED);
         }
-    }
-
-    private void setupForegroundDispatch() {
-        if(mNfcAdapter == null)
-            return;
-
-        final Intent intent = new Intent(this.getApplicationContext(),this.getClass());
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        final PendingIntent pendingIntent =
-                PendingIntent.getActivity(this.getApplicationContext(), 0, intent, 0);
-        IntentFilter[] filters = new IntentFilter[1];
-        String[][] techList = new String[][]{};
-
-        // We only want NDEF format tags
-        filters[0] = new IntentFilter();
-        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
-        try {
-            filters[0].addDataType("text/plain");
-        } catch (IntentFilter.MalformedMimeTypeException e) {
-            Log.e(TAG, "MalformedMimeTypeException", e);
-        }
-        mNfcAdapter.enableForegroundDispatch(this, pendingIntent, filters, techList);
-    }
-
-    private void stopForegroundDispatch() {
-        if(mNfcAdapter != null)
-            mNfcAdapter.disableForegroundDispatch(this);
     }
 
 }

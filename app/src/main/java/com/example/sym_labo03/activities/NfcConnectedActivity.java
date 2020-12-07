@@ -2,19 +2,26 @@ package com.example.sym_labo03.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.sym_labo03.NfcReader;
 import com.example.sym_labo03.R;
 
-import java.sql.Time;
+import java.lang.ref.WeakReference;
 import java.sql.Timestamp;
 
 public class NfcConnectedActivity extends AppCompatActivity {
 
+    private NfcAdapter mNfcAdapter;
+    private NfcConnectedActivity.NfcHandler handler;
     private Timestamp lastScan;
 
     private static final String TAG = "NFC_CONNECTED_ACTIVITY";
@@ -26,22 +33,57 @@ public class NfcConnectedActivity extends AppCompatActivity {
         MAX, MED, MIN
     }
 
+    private static class NfcHandler extends Handler {
+        private final WeakReference<NfcConnectedActivity> mActivity;
+        public NfcHandler(NfcConnectedActivity activity) {
+            super(Looper.getMainLooper());
+            mActivity = new WeakReference<>(activity);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            NfcConnectedActivity activity = mActivity.get();
+            if (activity != null && NfcReader.verifyValues(msg.getData().getStringArrayList("results"))) {
+                activity.resetLastScan();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc_connected);
 
+        // NFC reading handler
+        handler = new NfcConnectedActivity.NfcHandler(NfcConnectedActivity.this);
+
         Button btnMax = findViewById(R.id.nfcConnected_max_btn);
         Button btnMed = findViewById(R.id.nfcConnected_med_btn);
         Button btnMin = findViewById(R.id.nfcConnected_min_btn);
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        lastScan = new Timestamp(System.currentTimeMillis());
+        resetLastScan();
 
         btnMax.setOnClickListener(v -> displaySecurityCheck(SecurityLevel.MAX));
         btnMed.setOnClickListener(v -> displaySecurityCheck(SecurityLevel.MED));
         btnMin.setOnClickListener(v -> displaySecurityCheck(SecurityLevel.MIN));
+    }
 
-        // TODO rescan NFC
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NfcReader.setupForegroundDispatch(this, mNfcAdapter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        NfcReader.stopForegroundDispatch(this, mNfcAdapter);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        new NfcReader(intent, handler);
     }
 
     /**
@@ -83,5 +125,13 @@ public class NfcConnectedActivity extends AppCompatActivity {
                 checkSecurity(targetLevel) ? R.string.nfc_sufficient_level : R.string.nfc_insufficient_level,
                 Toast.LENGTH_SHORT)
                 .show();
+    }
+
+    /**
+     * Sets the lastScan timestamp to right now.
+     */
+    private void resetLastScan() {
+        lastScan = new Timestamp(System.currentTimeMillis());
+        Toast.makeText(this, "Security updated", Toast.LENGTH_SHORT).show();
     }
 }

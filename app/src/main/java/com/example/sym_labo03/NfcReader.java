@@ -2,7 +2,10 @@
 
 package com.example.sym_labo03;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -24,12 +27,27 @@ public class NfcReader {
 
     private static final String TAG = "NFC_UTILS";
     private static final String MIME_TEXT_PLAIN = "text/plain";
+    private static final String[] NFC_PWD = new String[]{"test", "é è ê ë ē", "♤ ♡ ♢ ♧"};
 
     public NfcReader(Intent intent, Handler handler) {
         this.handler = handler;
         this.intent = intent;
 
         handleIntentReadNfc();
+    }
+
+    /**
+     * Check if the given list contains at least one of the secret String value.
+     * @param values the list to be verified.
+     * @return true if a String could be found.
+     */
+    public static boolean verifyValues(ArrayList<String> values) {
+        for(String v : NFC_PWD) {
+            if(values.contains(v)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // Source: https://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
@@ -115,5 +133,35 @@ public class NfcReader {
 
         // Get the Text
         return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
+    }
+
+
+    public static void setupForegroundDispatch(Activity activity, NfcAdapter mNfcAdapter) {
+        if(mNfcAdapter == null)
+            return;
+
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent =
+                PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
+
+        // We only want NDEF format tags
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType("text/plain");
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            Log.e(TAG, "MalformedMimeTypeException", e);
+        }
+        mNfcAdapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
+
+    public static void stopForegroundDispatch(Activity activity, NfcAdapter nfcAdapter) {
+        if(nfcAdapter != null)
+            nfcAdapter.disableForegroundDispatch(activity);
     }
 }
