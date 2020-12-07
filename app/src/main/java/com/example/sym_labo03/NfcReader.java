@@ -37,7 +37,7 @@ public class NfcReader {
     }
 
     /**
-     * Check if the given list contains at least one of the secret String value.
+     * Check if the given list contains at least one of the secret String values.
      * @param values the list to be verified.
      * @return true if a String could be found.
      */

@@ -13,9 +13,9 @@
     <string name="nfc_read_ok">NFC OK</string>
     <string name="nfc_read_ask">Please, scan NFC tag.</string>
     <string name="nfc_connect_btn">Connect</string>
-    <string name="nfc_max_btn">Maximum security</string>
-    <string name="nfc_med_btn">Medium security</string>
-    <string name="nfc_min_btn">Minimum security</string>
+    <string name="nfc_max_btn">Maximum security (%1$ds)</string>
+    <string name="nfc_med_btn">Medium security (%1$ds)</string>
+    <string name="nfc_min_btn">Minimum security (%1$ds)</string>
     <string name="nfc_sufficient_level">Sufficient level</string>
     <string name="nfc_insufficient_level">Insufficient level</string>
 </resources>

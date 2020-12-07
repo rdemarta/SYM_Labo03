@@ -65,6 +65,11 @@ public class NfcConnectedActivity extends AppCompatActivity {
         Button btnMin = findViewById(R.id.nfcConnected_min_btn);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        // Indicates timeouts in buttons' labels
+        btnMax.setText(getString(R.string.nfc_max_btn, MAX_SECURITY_TIMEOUT_S));
+        btnMed.setText(getString(R.string.nfc_max_btn, MED_SECURITY_TIMEOUT_S));
+        btnMin.setText(getString(R.string.nfc_max_btn, MIN_SECURITY_TIMEOUT_S));
+
         resetLastScan();
 
         // Display different security levels status (sufficient or not)
@@ -109,7 +114,7 @@ public class NfcConnectedActivity extends AppCompatActivity {
                 if(elapsedSeconds > MIN_SECURITY_TIMEOUT_S) return false;
         }
 
-        return false;
+        return true;
     }
 
     /**

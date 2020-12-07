@@ -4,16 +4,13 @@ package com.example.sym_labo03.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
