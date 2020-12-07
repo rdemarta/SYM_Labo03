@@ -1,3 +1,5 @@
+// Authors: Robin Demarta, Loïc Dessaules, Chau Ying Kot
+
 package com.example.sym_labo03.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -42,7 +43,10 @@ public class NfcConnectedActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             NfcConnectedActivity activity = mActivity.get();
+
+            // Check read values
             if (activity != null && NfcReader.verifyValues(msg.getData().getStringArrayList("results"))) {
+                // Reset security to max
                 activity.resetLastScan();
             }
         }
@@ -63,6 +67,7 @@ public class NfcConnectedActivity extends AppCompatActivity {
 
         resetLastScan();
 
+        // Display different security levels status (sufficient or not)
         btnMax.setOnClickListener(v -> displaySecurityCheck(SecurityLevel.MAX));
         btnMed.setOnClickListener(v -> displaySecurityCheck(SecurityLevel.MED));
         btnMin.setOnClickListener(v -> displaySecurityCheck(SecurityLevel.MIN));
@@ -87,32 +92,24 @@ public class NfcConnectedActivity extends AppCompatActivity {
     }
 
     /**
-     * Check if the given level is currently reached or not.
+     * Check if the given level is currently reached or not by comparing last scan's timestamp with current one.
      * @param targetLevel level to be verified
-     * @return true if the level is reached.
+     * @return true if the level is accessible.
      */
     private boolean checkSecurity(SecurityLevel targetLevel) {
         Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
         long elapsedSeconds = (currentTimestamp.getTime() - lastScan.getTime()) / 1000;
-        boolean ok = true;
-
-        Log.d(TAG, "*********************************");
-        Log.d(TAG, "lastScan: " + lastScan + " now: " + currentTimestamp);
-        Log.d(TAG, "elapsed: " + elapsedSeconds);
 
         switch (targetLevel) {
             case MAX:
-                if(elapsedSeconds > MAX_SECURITY_TIMEOUT_S) ok = false;
-                break;
+                if(elapsedSeconds > MAX_SECURITY_TIMEOUT_S) return false;
             case MED:
-                if(elapsedSeconds > MED_SECURITY_TIMEOUT_S) ok = false;
-                break;
+                if(elapsedSeconds > MED_SECURITY_TIMEOUT_S) return false;
             case MIN:
-                if(elapsedSeconds > MIN_SECURITY_TIMEOUT_S) ok = false;
-                break;
+                if(elapsedSeconds > MIN_SECURITY_TIMEOUT_S) return false;
         }
 
-        return ok;
+        return false;
     }
 
     /**
