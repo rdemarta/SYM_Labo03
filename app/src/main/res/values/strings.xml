@@ -3,5 +3,19 @@
     <string name="main_barcode_btn">Code-barres</string>
     <string name="main_ibeacon_btn">iBeacon</string>
     <string name="main_nfc_btn">NFC</string>
-    <string name="main_title">Labo 3 - Utilisation de données environnemental</string>
+    <string name="main_title">Labo 3 - Utilisation de données environnementales</string>
+
+    <string name="nfc_not_supported">NFC not supported on your device</string>
+    <string name="nfc_bad_credentials">Bad credentials</string>
+    <string name="nfc_username_input">Username</string>
+    <string name="nfc_password_input">Password</string>
+    <string name="nfc_read_wrong">Wrong NFC tag</string>
+    <string name="nfc_read_ok">NFC OK</string>
+    <string name="nfc_read_ask">Please, scan NFC tag.</string>
+    <string name="nfc_connect_btn">Connect</string>
+    <string name="nfc_max_btn">Maximum security (%1$ds)</string>
+    <string name="nfc_med_btn">Medium security (%1$ds)</string>
+    <string name="nfc_min_btn">Minimum security (%1$ds)</string>
+    <string name="nfc_sufficient_level">Sufficient level</string>
+    <string name="nfc_insufficient_level">Insufficient level</string>
 </resources>
