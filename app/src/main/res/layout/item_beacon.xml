@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:background="#000"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/itemBeacon_tvUuid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"
+        tools:text="d68260ac-0a85-4f43-8946-7af7bb1efb25" />
+
+    <!-- Major -->
+    <TextView
+        android:id="@+id/itemBeacon_tvMajor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toRightOf="@id/itemBeacon_tvSeparator"
+        app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
+        android:textColor="@color/white"
+        tools:text="3"
+        />
+
+    <!-- Separation -->
+    <TextView
+        android:id="@+id/itemBeacon_tvSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toRightOf="@+id/itemBeacon_tvMinor"
+        app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
+        android:textColor="@color/white"
+        android:text=" - "
+        />
+
+    <!-- Minor -->
+    <TextView
+        android:id="@+id/itemBeacon_tvMinor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
+        android:textColor="@color/white"
+        tools:text="1"
+        />
+
+    <!-- Progress bar for RSSI signal -->
+    <ProgressBar
+        android:id="@+id/itemBeacon_pbRssi"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="@color/design_default_color_primary"
+        app:layout_constraintLeft_toRightOf="@id/itemBeacon_tvMajor"
+        app:layout_constraintTop_toBottomOf="@id/itemBeacon_tvUuid"
+        app:layout_constraintRight_toLeftOf="@+id/itemBeacon_tvRssi" />
+
+    <!-- RSSI -->
+    <TextView
+        android:id="@+id/itemBeacon_tvRssi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
+        android:textColor="@color/white"
+        tools:text="-47"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
