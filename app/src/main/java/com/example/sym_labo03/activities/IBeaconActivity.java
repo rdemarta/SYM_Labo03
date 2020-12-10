@@ -1,20 +1,24 @@
-package com.example.sym_labo03;
+// Authors: Robin Demarta, Loïc Dessaules, Chau Ying Kot
 
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.sym_labo03.activities;
 
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.sym_labo03.BeaconModel;
+import com.example.sym_labo03.BeaconsAdapter;
+import com.example.sym_labo03.R;
+
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
-import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-import org.altbeacon.beacon.startup.BootstrapNotifier;
 
 import java.util.Collection;
 

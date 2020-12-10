@@ -1,18 +1,16 @@
+// Authors: Robin Demarta, Loïc Dessaules, Chau Ying Kot
+
 package com.example.sym_labo03;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class BeaconsAdapter extends BaseAdapter {
 

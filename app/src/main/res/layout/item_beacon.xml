@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:background="#000"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -14,7 +13,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/white"
         tools:text="d68260ac-0a85-4f43-8946-7af7bb1efb25" />
 
     <!-- Major -->
@@ -25,7 +23,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@id/itemBeacon_tvSeparator"
         app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
-        android:textColor="@color/white"
         tools:text="3"
         />
 
@@ -37,7 +34,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@+id/itemBeacon_tvMinor"
         app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
-        android:textColor="@color/white"
         android:text=" - "
         />
 
@@ -49,7 +45,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
-        android:textColor="@color/white"
         tools:text="1"
         />
 
@@ -62,7 +57,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:progressBackgroundTint="@color/white"
         android:progressTint="@color/design_default_color_primary"
         app:layout_constraintLeft_toRightOf="@id/itemBeacon_tvMajor"
         app:layout_constraintTop_toBottomOf="@id/itemBeacon_tvUuid"
@@ -76,7 +70,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itemBeacon_tvUuid"
-        android:textColor="@color/white"
         tools:text="-47"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
