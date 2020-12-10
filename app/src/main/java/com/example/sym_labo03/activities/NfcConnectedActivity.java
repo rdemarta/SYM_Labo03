@@ -67,8 +67,8 @@ public class NfcConnectedActivity extends AppCompatActivity {
 
         // Indicates timeouts in buttons' labels
         btnMax.setText(getString(R.string.nfc_max_btn, MAX_SECURITY_TIMEOUT_S));
-        btnMed.setText(getString(R.string.nfc_max_btn, MED_SECURITY_TIMEOUT_S));
-        btnMin.setText(getString(R.string.nfc_max_btn, MIN_SECURITY_TIMEOUT_S));
+        btnMed.setText(getString(R.string.nfc_med_btn, MED_SECURITY_TIMEOUT_S));
+        btnMin.setText(getString(R.string.nfc_min_btn, MIN_SECURITY_TIMEOUT_S));
 
         resetLastScan();
 
