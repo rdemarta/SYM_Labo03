@@ -27,9 +27,9 @@ public class BarcodeActivity extends AppCompatActivity {
 
     private DecoratedBarcodeView barcodeView;
 
-    private final ImageView preview = findViewById(R.id.barcode_preview_iv);
+    private ImageView preview;
 
-    private final TextView decodedText = findViewById(R.id.barcode_decoded_text_tv);
+    private TextView decodedText;
 
     private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
@@ -59,6 +59,8 @@ public class BarcodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_barcode);
 
         barcodeView = findViewById(R.id.barcode_scanner);
+        preview = findViewById(R.id.barcode_preview_iv);
+        decodedText = findViewById(R.id.barcode_decoded_text_tv);
 
         // Set the list of format that our scanner can handle
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
