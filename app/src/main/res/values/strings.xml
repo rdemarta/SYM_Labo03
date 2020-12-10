@@ -18,4 +18,7 @@
     <string name="nfc_min_btn">Minimum security (%1$ds)</string>
     <string name="nfc_sufficient_level">Sufficient level</string>
     <string name="nfc_insufficient_level">Insufficient level</string>
+
+    <string name="barcode_preview_description_iv">preview</string>
+    <string name="barcode_decoded_hint">Decoded message</string>
 </resources>

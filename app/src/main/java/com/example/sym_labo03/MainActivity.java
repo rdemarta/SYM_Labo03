@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
         Button ibeaconBtn = findViewById(R.id.main_ibeacon_btn);
         Button nfcBtn = findViewById(R.id.main_nfc_btn);
 
-/*        barcodeBtn.setOnClickListener(new View.OnClickListener() {
+        barcodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.class, )
+                Intent intent = new Intent(MainActivity.this, BarcodeActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
 /*        ibeaconBtn.setOnClickListener(new View.OnClickListener() {
             @Override
