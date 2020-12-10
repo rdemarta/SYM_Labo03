@@ -1,3 +1,5 @@
+// Authors: Robin Demarta, Loïc Dessaules, Chau Ying Kot
+
 package com.example.sym_labo03.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
