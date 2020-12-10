@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.sym_labo03.activities.BarcodeActivity;
 import com.example.sym_labo03.activities.NfcActivity;
 
 public class MainActivity extends AppCompatActivity {

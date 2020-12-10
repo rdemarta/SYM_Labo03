@@ -1,4 +1,4 @@
-package com.example.sym_labo03;
+package com.example.sym_labo03.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sym_labo03.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
